@@ -14,10 +14,9 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = '7427437602f94bcb98181ca321a39623'; // your clientId
-var client_secret = '9620c4662a5042dcab7e1951c74bef28'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
+var client_id = process.env.CLIENT_ID; // your clientId
+var client_secret = process.env.CLIENT_SECRETT; // Your secret
+var redirect_uri = 'https://spotifytimelinebackend-production.up.railway.app/callback'; 
 
 const generateRandomString = (length) => {
   return crypto
@@ -142,5 +141,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+const PORT = process.env.PORT || 9000;
+
+app.listen(PORT, () => console.log(`Sever is running port ${PORT} ...`));
