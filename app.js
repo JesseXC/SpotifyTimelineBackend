@@ -15,12 +15,13 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const { type } = require('os');
 
+const PORT = process.env.PORT || 9000;
 var client_id = process.env.CLIENT_ID; // your clientId
 var client_secret = process.env.CLIENT_SECRET; // Your secret
 console.log(client_id)
 console.log(typeof(client_id))
 console.log("Hello")
-var redirect_uri = 'https://spotifytimelinebackend-production.up.railway.app/callback'; 
+var redirect_uri = `localhost:${PORT}/callback`; 
 
 const generateRandomString = (length) => {
   return crypto
@@ -145,6 +146,5 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-const PORT = process.env.PORT || 9000;
 
 app.listen(PORT, () => console.log(`Sever is running port ${PORT} ...`));
