@@ -20,7 +20,7 @@ var client_secret = process.env.CLIENT_SECRET; // Your secret
 console.log(client_id)
 console.log(typeof(client_id))
 console.log("Hello")
-var redirect_uri = 'spotifytimelinebackend-production.up.railway.app/callback'; 
+var redirect_uri = 'https:spotifytimelinebackend-production.up.railway.app/callback'; 
 
 const generateRandomString = (length) => {
   return crypto
