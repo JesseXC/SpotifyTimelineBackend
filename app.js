@@ -54,6 +54,18 @@ app.get('/login', function(req, res) {
     }));
 });
 
+const mysql = require('mysql');
+
+// Database connection configuration
+const db = mysql.createConnection({
+  host: 'roundhouse.proxy.rlwy.net',
+  user: 'root',
+  password: 'hCACAa-2hEdfEfFB426HcHHa2-Ce2hbC',
+  database: 'railway'
+});
+
+
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
@@ -99,6 +111,25 @@ app.get('/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
+
+        const SpotifyUsername = body.id;
+        
+        db.query('SELECT * FROM users WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
+          if (err) {
+            // handle error
+          } else if (result.length === 0) {
+            // User does not exist, insert new user
+            db.query('INSERT INTO users (spotify_username) VALUES (?)', [spotifyUsername], (insertErr) => {
+              if (insertErr) {
+                // handle error
+              }
+              // proceed after successfully inserting the user
+            });
+          } else {
+            // User exists, proceed with your logic
+          }
+        });
+        
         });
 
         // we can also pass the token to the browser to make requests from there
