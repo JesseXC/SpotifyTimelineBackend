@@ -1,3 +1,5 @@
+import SpotifyWebApi from 'spotify-web-api-js';
+
 /**
  * This is an example of a basic node.js script that performs
  * the Authorization Code oAuth2 flow to authenticate against
@@ -6,6 +8,33 @@
  * For more information, read
  * https://developer.spotify.com/documentation/web-api/tutorials/code-flow
  */
+
+const spotifyApi = new SpotifyWebApi();
+
+const getTopTracks = async () => {
+  try {
+    const response = await spotifyApi.getMyTopTracks();
+    console.log(response); // Log the full response
+    return response.items; // Assuming 'items' contains the list of top tracks
+  } catch (error) {
+    console.error("Error fetching top tracks: ", error);
+    return []; // Return an empty array in case of an error
+  }
+};
+
+// Function to initialize and set topSongs
+const initializeTopSongs = async () => {
+  const topSongs = await getTopTracks();
+  console.log(topSongs); // Use or log the topSongs here
+};
+
+// Call the function to initialize topSongs
+initializeTopSongs();
+
+const firstFourTopSongsIdsString = topSongs.slice(0, 4).map(song => song.id).join(', ');
+
+
+
 
 var express = require('express');
 var request = require('request');
@@ -54,6 +83,18 @@ app.get('/login', function(req, res) {
     }));
 });
 
+const mysql = require('mysql');
+
+// Database connection configuration
+const db = mysql.createConnection({
+  host: 'roundhouse.proxy.rlwy.net',
+  user: 'root',
+  password: 'hCACAa-2hEdfEfFB426HcHHa2-Ce2hbC',
+  database: 'railway'
+});
+
+
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
@@ -99,6 +140,27 @@ app.get('/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
+
+        const SpotifyUsername = body.id;
+        
+        db.query('SELECT * FROM users WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
+          if (err) {
+            console.log("error accessing database")
+          } else if (result.length === 0) {
+            // User does not exist, insert new user
+            db.query('INSERT INTO users (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, firstFourTopSongsIdsString], (insertErr) => {
+              if (insertErr) {
+                console.error("Error inserting new user: ", insertErr);
+              } else {
+                console.log("New user inserted successfully");
+                // proceed after successfully inserting the user
+              }
+            });
+          } else {
+            // User exists, proceed with your logic
+          }
+        });
+        
         });
 
         // we can also pass the token to the browser to make requests from there
