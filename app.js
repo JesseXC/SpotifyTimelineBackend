@@ -147,7 +147,7 @@ app.get('/callback', function(req, res) {
         
         db.query('SELECT * FROM users WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
           if (err) {
-            console.log("error accessing database")
+            throw err;
           } else if (result.length === 0) {
             // User does not exist, insert new user
             db.query('INSERT INTO users (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, ""], (insertErr) => {
