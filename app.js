@@ -1,5 +1,3 @@
-import SpotifyWebApi from 'spotify-web-api-js';
-
 /**
  * This is an example of a basic node.js script that performs
  * the Authorization Code oAuth2 flow to authenticate against
@@ -9,29 +7,33 @@ import SpotifyWebApi from 'spotify-web-api-js';
  * https://developer.spotify.com/documentation/web-api/tutorials/code-flow
  */
 
-const spotifyApi = new SpotifyWebApi();
 
-const getTopTracks = async () => {
-  try {
-    const response = await spotifyApi.getMyTopTracks();
-    console.log(response); // Log the full response
-    return response.items; // Assuming 'items' contains the list of top tracks
-  } catch (error) {
-    console.error("Error fetching top tracks: ", error);
-    return []; // Return an empty array in case of an error
-  }
-};
+// const SpotifyWebApi = require('spotify-web-api-node');
+// const spotifyApi = new SpotifyWebApi();
 
-// Function to initialize and set topSongs
-const initializeTopSongs = async () => {
-  const topSongs = await getTopTracks();
-  console.log(topSongs); // Use or log the topSongs here
-};
+// spotifyApi.set
 
-// Call the function to initialize topSongs
-initializeTopSongs();
+// const getTopTracks = async () => {
+//   try {
+//     const response = await spotifyApi.getMyTopTracks();
+//     console.log(response); // Log the full response
+//     return response.items; // Assuming 'items' contains the list of top tracks
+//   } catch (error) {
+//     console.error("Error fetching top tracks: ", error);
+//     return []; // Return an empty array in case of an error
+//   }
+// };
 
-const firstFourTopSongsIdsString = topSongs.slice(0, 4).map(song => song.id).join(', ');
+// // Function to initialize and set topSongs
+// const initializeTopSongs = async () => {
+//   const topSongs = await getTopTracks();
+//   console.log(topSongs); // Use or log the topSongs here
+// };
+
+// // Call the function to initialize topSongs
+// initializeTopSongs();
+
+// const firstFourTopSongsIdsString = topSongs.slice(0, 4).map(song => song.id).join(', ');
 
 
 
@@ -148,7 +150,7 @@ app.get('/callback', function(req, res) {
             console.log("error accessing database")
           } else if (result.length === 0) {
             // User does not exist, insert new user
-            db.query('INSERT INTO users (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, firstFourTopSongsIdsString], (insertErr) => {
+            db.query('INSERT INTO users (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, ""], (insertErr) => {
               if (insertErr) {
                 console.error("Error inserting new user: ", insertErr);
               } else {
