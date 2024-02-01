@@ -143,7 +143,7 @@ app.get('/callback', function(req, res) {
         request.get(options, function(error, response, body) {
           console.log(body);
 
-        const SpotifyUsername = body.id;
+        const spotifyUsername = body.id;
         
         db.query('SELECT * FROM users WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
           if (err) {
