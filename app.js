@@ -91,6 +91,7 @@ const mysql = require('mysql2');
 const db = mysql.createConnection({
   host: 'roundhouse.proxy.rlwy.net',
   user: 'root',
+  port: "11042",
   password: 'hCACAa-2hEdfEfFB426HcHHa2-Ce2hbC',
   database: 'railway'
 });
