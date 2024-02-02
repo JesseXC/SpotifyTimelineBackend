@@ -89,7 +89,7 @@ const mysql = require('mysql2');
 
 // Database connection configuration
 const db = mysql.createConnection({
-  host: 'mysql.railway.internal',
+  host: 'roundhouse.proxy.rlwy.net',
   user: 'root',
   password: 'hCACAa-2hEdfEfFB426HcHHa2-Ce2hbC',
   database: 'railway'
