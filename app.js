@@ -85,7 +85,7 @@ app.get('/login', function(req, res) {
     }));
 });
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 // Database connection configuration
 const db = mysql.createConnection({
