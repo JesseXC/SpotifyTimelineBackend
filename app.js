@@ -146,12 +146,12 @@ app.get('/callback', function(req, res) {
 
         const spotifyUsername = body.id;
         
-        db.query('SELECT * FROM users WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
+        db.query('SELECT * FROM userSongs WHERE spotify_username = ?', [spotifyUsername], (err, result) => {
           if (err) {
             console.error("Error accessing database: ", err)
           } else if (result.length === 0) {
             // User does not exist, insert new user
-            db.query('INSERT INTO users (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, ""], (insertErr) => {
+            db.query('INSERT INTO userSongs (spotify_username, song_ids) VALUES (?, ?)', [spotifyUsername, ""], (insertErr) => {
               if (insertErr) {
                 console.error("Error inserting new user: ", insertErr);
               } else {
