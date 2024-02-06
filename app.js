@@ -110,13 +110,14 @@ app.get('/api/songs/:username', (req, res) => {
   });
 });
 
-const corsOptions = {
-  origin: 'http://localhost:5173',  // Allow only this origin to send requests
-  optionsSuccessStatus: 200  // Some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+// const corsOptions = {
+//   origin: 'http://localhost:5173',  // Allow only this origin to send requests
+//   optionsSuccessStatus: 200  // Some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
+app.use(cors());
 
 const mysql = require('mysql2');
 
